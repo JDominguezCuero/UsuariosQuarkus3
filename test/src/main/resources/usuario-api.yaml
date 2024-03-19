@@ -1,0 +1,95 @@
+openapi: 3.0.1
+servers:
+  - description: Index swagger
+    url: https://api.samtel.co
+info:
+  description: Servicio de entidad Usuario.
+  version: 0.0.1
+  title: Usuarios
+  contact:
+    name: Samtel
+    url: https://www.samtel.co/
+    email: api@samtel.co
+  license:
+    name: GNU GPLv3
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+tags:
+  - name: Crear usuario
+    description: Creación de usuarios
+  - name: Listar usuario
+    description: Listado de usuarios
+paths:
+# ------------------- Crear Usuario ---------------------
+  /v1/es/usuario:
+    post:
+      tags:
+        - Crear usuario
+      operationId: crearUsuario
+      requestBody:
+        description: Datos del usuario a crear
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UsuarioTypeInput"
+      responses:
+        "200":
+          description: Usuario creado exitosamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UsuarioTypeResponse"
+        "400":
+          description: Parámetros de entrada no válidos.
+        "404":
+          description: No se encuentra la novedad.
+# -------------------- Listar Usuario -------------------------
+  /v1/es/listUsuario/{idtbl_user}:
+    get:
+      tags:
+        - Listar usuario
+      parameters:
+        - in: path
+          name: idtbl_user
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: ID del usuario a listar
+      operationId: listarUsuario
+      responses:
+        "200":
+          description: Lista de usuarios obtenida exitosamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UsuarioTypeResponse"
+        "400":
+          description: Parámetros de entrada no válidos.
+        "404":
+          description: No se encuentra la novedad.
+components:
+  schemas:
+    UsuarioTypeResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        lastname:
+          type: string
+        createat:
+          type: string
+          format: date
+    UsuarioTypeInput:
+      type: object
+      properties:
+        name:
+          type: string
+        lastname:
+          type: string
+        createat:
+          type: string
+          format: date

@@ -1,0 +1,13 @@
+co\samtel\test\service\contract\IUsuarioService.class
+co\samtel\test\gen\type\UsuarioTypeResponse.class
+co\samtel\test\utils\ApplicationException.class
+co\samtel\test\dao\UsuarioDao.class
+META-INF\panache-archive.marker
+co\samtel\test\constant\Constant.class
+co\samtel\test\gen\contract\V1UsuarioApi.class
+co\samtel\test\controller\UsuarioController.class
+co\samtel\test\ExampleResource.class
+co\samtel\test\service\impl\UsuarioServiceImpl.class
+co\samtel\test\gen\type\UsuarioTypeInput.class
+co\samtel\test\utils\UsuarioMapper.class
+co\samtel\test\entity\Usuario.class
