@@ -14,10 +14,11 @@ info:
     name: GNU GPLv3
     url: https://www.gnu.org/licenses/gpl-3.0.html
 tags:
-  - name: Crear usuario
-    description: Creación de usuarios
-  - name: Listar usuario
-    description: Listado de usuarios
+  - name: Usuarios
+    description: Gestion de usuarios
+#----------------------------
+#Endpoints de la Entidad
+#----------------------------
 paths:
 # ------------------- Crear Usuario ---------------------
   /v1/es/usuario:
@@ -41,9 +42,28 @@ paths:
                 items:
                   $ref: "#/components/schemas/UsuarioTypeResponse"
         "400":
-          description: Parámetros de entrada no válidos.
+          description: "Parámetros de entrada no válidos."
         "404":
-          description: No se encuentra la novedad.
+          description: "No se encuentra la novedad."
+#--------------- Listar Usuarios -----------------
+  /v1/es/listadoUsuarios:
+    get:
+      tags:
+        - Listar todos los usuario
+      operationId: listarTodosLosUsuario
+      responses:
+        "200":
+          description: Lista de usuario.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UsuarioTypeResponse"
+        "400":
+          description: "Parámetros de entrada no validos."
+        "404":
+          description: "No se encuentra la novedad."
 # -------------------- Listar Usuario -------------------------
   /v1/es/listUsuario/{idtbl_user}:
     get:
@@ -68,9 +88,66 @@ paths:
                 items:
                   $ref: "#/components/schemas/UsuarioTypeResponse"
         "400":
-          description: Parámetros de entrada no válidos.
+          description: "Parámetros de entrada no válidos."
         "404":
-          description: No se encuentra la novedad.
+          description: "No se encuentra la novedad."
+ #------------- Actualizar Usuario ----------------
+  /v1/es/editarUsuario/{idtbl_user}:
+    put:
+      tags:
+        - Editar usuario
+      parameters:
+        - in: path
+          name: idtbl_user   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      operationId: editarUsuario
+      requestBody:
+        description: Editar usuario
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UsuarioTypeInput"
+      responses:
+        "200":
+          description: Usuario editado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UsuarioTypeResponse"
+        "400":
+          description: "Parámetros de entrada no validos."
+        "404":
+          description: "No se encuentra la novedad."
+  #---------------- Eliminar Usuario ----------------
+  /v1/es/eliminarUsuario/{idtbl_user}:
+    delete:
+      tags:
+        - Eliminar Usuario
+      parameters:
+        - in: path
+          name: idtbl_user   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      operationId: eliminarUsuario
+      responses:
+        "200":
+          description: Usuario eliminado.
+        "400":
+          description: "Parámetros de entrada no validos."
+        "404":
+          description: "No se encuentra la novedad."
+#---------------------------------------------
+#Se declaran los Modelos/Schemas del servicio
+#---------------------------------------------
 components:
   schemas:
     UsuarioTypeResponse:

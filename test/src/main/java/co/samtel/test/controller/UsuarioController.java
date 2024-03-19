@@ -36,6 +36,19 @@ public class UsuarioController implements V1UsuarioApi {
     }
 
     @Override
+    public Response listarTodosLosUsuario() {
+        LOG.info("Inicio el proceso listarTodosLosUsuarios Controller.");
+        List<UsuarioTypeResponse> usuarioType = null;
+        try{
+            usuarioType = usuarioServiceImpl.listarTodosLosUsuarios();
+        }catch(ApplicationException e){
+            LOG.error(ERROR_SERVICIO + e.getMessage()+ " listarTodosLosUsuario Controller.");
+            return  Response.status(Response.Status.BAD_REQUEST).entity(usuarioType).build();
+        }
+        return Response.status(Response.Status.FOUND).entity(usuarioType).build();
+    }
+
+    @Override
     public Response listarUsuario(Integer idtblUser) {
         LOG.info("Inicio el proceso de listarUsuario Controller.");
 
@@ -49,5 +62,31 @@ public class UsuarioController implements V1UsuarioApi {
         }
 
         return Response.status(Response.Status.FOUND).entity(usuarioType).build();
+    }
+
+    @Override
+    public Response editarUsuario(Integer idtblUser, UsuarioTypeInput usuarioTypeInput) {
+        LOG.info("Inicio el proceso editarUsuario Controller");
+
+        try{
+            usuarioServiceImpl.editarUsuario(idtblUser, usuarioTypeInput);
+        }catch(ApplicationException e){
+            LOG.error(ERROR_SERVICIO + e.getMessage()+ " editarUsuario Controller.");
+            return  Response.status(Response.Status.BAD_REQUEST).entity(usuarioTypeInput).build();
+        }
+
+        return Response.ok().entity(usuarioTypeInput).build();
+    }
+
+    @Override
+    public Response eliminarUsuario(Integer idtblUser) {
+        LOG.info("Inicio el proceso eliminarUsuario Controller.");
+        try{
+            usuarioServiceImpl.eliminarUsuario(idtblUser);
+        }catch(ApplicationException e){
+            LOG.error(ERROR_SERVICIO + e.getMessage()+ " eliminarUsuario Controller.");
+            return  Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        return Response.noContent().build();
     }
 }
